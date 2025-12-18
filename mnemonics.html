@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Abbreviator</title>
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #e5e5e5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h3 {
+            color: #b3b3b3;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 160px;
+            margin-bottom: 16px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 12px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #10a37f;
+        }
+
+        button {
+            background-color: #10a37f;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0e8f6f;
+        }
+    </style>
+</head>
+<body>
+
+<h3>Input Text</h3>
+<textarea id="input" placeholder="Enter your text here..."></textarea>
+
+<button onclick="abbreviateText()">Abbreviate</button>
+
+<h3>Abbreviated Output</h3>
+<textarea id="output" readonly></textarea>
+
+<script>
+function abbreviateText() {
+    const text = document.getElementById("input").value;
+
+    const result = text.replace(/\w+/g, (word) => {
+        // Check if alphabetic only
+        if (/^[A-Za-z]+$/.test(word)) {
+            // Leave already-uppercase words unchanged
+            if (word === word.toUpperCase()) {
+                return word;
+            }
+            // Otherwise, return first letter capitalized
+            return word[0].toUpperCase();
+        }
+        // Keep non-alphabetic words unchanged
+        return word;
+    });
+
+    document.getElementById("output").value = result;
+}
+</script>
+
+</body>
+</html>
