@@ -30,6 +30,7 @@
             border-radius: 8px;
             padding: 12px;
             resize: vertical;
+            white-space: pre-wrap; /* preserve spaces and indentation */
         }
 
         textarea:focus {
@@ -82,6 +83,31 @@ function abbreviateText() {
 
     document.getElementById("output").value = result;
 }
+
+// -------------------
+// Enable Tab key as 4 spaces ONLY in input textarea
+// -------------------
+function enableTabAsSpaces(textareaId, spaces = 4) {
+    const textarea = document.getElementById(textareaId);
+    const spaceString = ' '.repeat(spaces);
+
+    textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+
+            // Insert spaces instead of tab
+            this.value = this.value.substring(0, start) + spaceString + this.value.substring(end);
+
+            // Move cursor after the inserted spaces
+            this.selectionStart = this.selectionEnd = start + spaces;
+        }
+    });
+}
+
+// Apply Tab-as-spaces only to input textarea
+enableTabAsSpaces('input', 4);
 </script>
 
 </body>
